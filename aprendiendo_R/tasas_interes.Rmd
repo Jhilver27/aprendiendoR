@@ -17,6 +17,7 @@ library(tidyverse)
 library(ggplot2)
 library(scales)
 library(plotly)
+library(zoo)
 ```
 
 ## Tasas de Interés
@@ -32,10 +33,11 @@ Las tasas de interés sirven para ndlsadsadsaldlasdna
 datos <- read.csv("tasaInteresMes.csv",header = TRUE ,sep = ",")
 View(datos)
 
-grafico1 <- ggplot(datos, aes(x = TIME, y =Value/100 , group = LOCATION, color = LOCATION)) +
+grafico1 <- ggplot(datos, aes(x = Fecha, y =Value/100 , group = LOCATION, color = LOCATION)) +
   geom_line()+
   labs(x = "Fecha", y ="Tasa de interés", color = "País")+
   scale_y_continuous(labels = percent )
+
 ggplotly(grafico1)
 
 ```
