@@ -30,8 +30,11 @@ Las tasas de interés sirven para ndlsadsadsaldlasdna
 ### Graficos de tasas interés paises
 
 ```{r, echo=FALSE, warning=FALSE}
+# cargar BD
 datos <- read.csv("tasaInteresMes.csv",header = TRUE ,sep = ",")
-View(datos)
+
+# Formatear tipo fecha columna TIME
+datos$Fecha <- as.Date(as.yearmon(datos$TIME))
 
 grafico1 <- ggplot(datos, aes(x = Fecha, y =Value/100 , group = LOCATION, color = LOCATION)) +
   geom_line()+
