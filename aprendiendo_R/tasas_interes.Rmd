@@ -1,0 +1,42 @@
+---
+title: "Tasas de Intéres"
+author: "Jhilver Anacona"
+date: "2023-04-03"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Importar librerias
+library(readr)
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(plotly)
+```
+
+## Tasas de Intéres
+
+### Definición
+
+Las tasas de interes sirven para ndlsadsadsaldlasdna
+
+
+### Graficos de tasas paises
+
+```{r, echo=FALSE, warning=FALSE}
+datos <- read.csv("tasaInteresMes.csv",header = TRUE ,sep = ",")
+View(datos)
+
+grafico1 <- ggplot(datos, aes(x = TIME, y =Value/100 , group = LOCATION, color = LOCATION)) +
+  geom_line()+
+  labs(x = "Fecha", y ="Tasa de interés", color = "País")+
+  scale_y_continuous(labels = percent )
+ggplotly(grafico1)
+
+```
+
