@@ -1,5 +1,5 @@
 ---
-title: "Tasas de Intéres"
+title: "Tasas de Interés"
 author: "Jhilver Anacona"
 date: "2023-04-03"
 output:
@@ -19,14 +19,14 @@ library(scales)
 library(plotly)
 ```
 
-## Tasas de Intéres
+## Tasas de Interés
 
 ### Definición
 
-Las tasas de interes sirven para ndlsadsadsaldlasdna
+Las tasas de interés sirven para ndlsadsadsaldlasdna
 
 
-### Graficos de tasas paises
+### Graficos de tasas interés paises
 
 ```{r, echo=FALSE, warning=FALSE}
 datos <- read.csv("tasaInteresMes.csv",header = TRUE ,sep = ",")
@@ -39,4 +39,6 @@ grafico1 <- ggplot(datos, aes(x = TIME, y =Value/100 , group = LOCATION, color =
 ggplotly(grafico1)
 
 ```
+
+[Inicio](../index.html)
 
