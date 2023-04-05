@@ -1,6 +1,8 @@
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
+    margin: 0%;
 }
 
 h1, h2 {
@@ -18,4 +20,12 @@ h1, h2 {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-  }
+}
+
+header{
+    background-color: lightgrey;
+    display:grid;
+    text-align: center;
+    width: 100%;
+    margin-top: 0%;
+}
