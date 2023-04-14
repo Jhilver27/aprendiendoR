@@ -1,0 +1,92 @@
+---
+title: "Tablero Acciones"
+output:
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(quantmod)
+library(tidyverse)
+library(plotly)
+library(dplyr)
+
+# Vector con acciones que descargare
+Tikets <- c("NFLX", "AAPL")
+# Api para descargar acciones desde Yahoo
+serie <- getSymbols(Tikets, src = "yahoo", auto.assign = TRUE,from = "2015-01-01")
+
+# Almacenar datos con los que trabajare
+datos <- data.frame(NFLX$NFLX.Close, AAPL$AAPL.Close)
+
+#Transformar el indice en una columna llamada Fecha
+datos <- datos %>% rownames_to_column(var = "Fecha")
+
+#Dar formato fecha a los datos que estaban en tipo caracter de la columna Fecha 
+datos$Fecha <- as.Date(datos$Fecha)
+
+```
+
+## Column {.sidebar}
+
+```{r}
+# Crear inputs con el nombre de las acciones
+
+selectInput("A", label = "Acción",
+            choices = c("NFLX.Close", "AAPL.Close"), selected = " ")
+
+
+
+```
+
+## Row
+
+### Gráfico
+
+```{r}
+# Acceder a un valor del imput destinado para las acciones
+
+serie <- reactive({
+  datos[,input$A]
+}) 
+
+
+#renderPrint({
+ # serie() # parentesis porque es reactivo
+  
+#})
+
+# Graficar las acciones con Render
+renderPlotly({
+ ggplot(datos, aes(x=Fecha, y = serie())) + 
+  geom_line()
+})
+
+
+
+```
+
+## Row
+
+### Estadisticas descriptivas
+
+```{r}
+renderPrint({
+  paste(mean(serie()), sd(serie()))
+  
+})
+
+
+
+```
+
+### Chart C
+
+```{r}
+renderPlot({
+  boxplot(serie())
+})
+
+```
