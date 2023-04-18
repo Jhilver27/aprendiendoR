@@ -1,6 +1,6 @@
 ---
 title: "Tablero Acciones"
-output:
+output: 
   flexdashboard::flex_dashboard:
     orientation: rows
     runtime: shiny
@@ -26,8 +26,6 @@ datos <- datos %>% rownames_to_column(var = "Fecha")
 
 #Dar formato fecha a los datos que estaban en tipo caracter de la columna Fecha 
 datos$Fecha <- as.Date(datos$Fecha)
-
-datos$Año <- format(datos$Fecha, "%Y")
 
 ```
 
@@ -62,14 +60,9 @@ serie <- reactive({
 
 # Graficar las acciones con Render
 renderPlotly({
- ggplot(datos, aes(x = Fecha, y = serie(), color = Año)) + 
-  geom_line(linewidth = 0.4) +
-    labs(x = "Año", y = "Valor Acción (USD)") +
-  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
-    theme_bw()+
-    guides(color ="none")+ #color=FALSE
-    theme(panel.grid.major = element_line(color = "gray"))
-  })
+ ggplot(datos, aes(x=Fecha, y = serie())) + 
+  geom_line()
+})
 
 
 
@@ -81,31 +74,18 @@ renderPlotly({
 
 ```{r}
 renderPrint({
-  media <- mean(serie())
-  desv <- sd(serie())
-  cat("Media: ", media, "\n")
-  cat("Desviación estándar: ", desv, "\n")
+  paste(mean(serie()), sd(serie()))
+  
 })
+
 
 
 ```
 
-<style>
-pre {
-  font-size: 18px;
-}
-</style>
+### Chart C
 
-### Diagrama de Caja
-
-```{r} 
-renderPlotly({
-ggplot(datos, aes(y = serie())) +
-    geom_boxplot(fill="#69b3a2") +
-    labs(y ="USD") 
-    #ylab("USD")
-  
-  #boxplot(serie())
+```{r}
+renderPlot({
+  boxplot(serie())
 })
-
 ```
